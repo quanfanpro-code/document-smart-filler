@@ -1,0 +1,9 @@
+﻿# 已在Windows与Python 3.14环境验证，并核对公开安装包可获取。
+python-docx==1.2.0
+openpyxl==3.1.5
+customtkinter==6.0.0
+requests==2.34.2
+PyMuPDF==1.28.2
+Pillow==12.3.0
+pywin32==312
+pytest==9.1.1

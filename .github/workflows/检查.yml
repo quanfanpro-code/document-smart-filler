@@ -1,0 +1,36 @@
+﻿name: Windows检查
+
+'on':
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: Python 3.14功能检查
+    runs-on: windows-latest
+    timeout-minutes: 20
+    env:
+      PYTHONUTF8: '1'
+    steps:
+      - name: 获取项目
+        uses: actions/checkout@v7
+      - name: 准备Python
+        id: python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.14'
+          cache: pip
+      - name: 安装固定依赖
+        shell: pwsh
+        run: |
+          $OutputEncoding = [Console]::OutputEncoding = [Text.Encoding]::UTF8
+          & '${{ steps.python.outputs.python-path }}' -m pip install -r requirements.txt
+      - name: 运行功能测试
+        shell: pwsh
+        run: |
+          $OutputEncoding = [Console]::OutputEncoding = [Text.Encoding]::UTF8
+          & '${{ steps.python.outputs.python-path }}' -X utf8 -m pytest -q
